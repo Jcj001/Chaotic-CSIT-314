@@ -1,0 +1,61 @@
+@import url("../base.css");
+
+.container{
+    display: flex;
+    height: 100vh;
+}
+
+.side-bar{
+    background-color: white;
+    box-shadow: 2px 0 3px rgba(0, 0, 0, 0.05);
+    padding: 10px 30px 30px;
+    height: 100%;
+
+    gap: 20px;
+}
+
+.side-bar__section-heading{
+    font-weight: bold;
+    font-size: 14px;
+    color: gray;
+}
+
+.side-bar__section-content{
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.side-bar__section-option{
+    display: flex;
+    align-items: center;
+}
+
+.side-bar__option a{
+    color: rgb(55, 55, 55);
+}
+
+.side-bar__option a:hover{
+    color: black
+}
+
+.section__signout{
+    margin-top: auto;
+}
+
+.content{
+    background-color: rgb(249, 239, 255);
+    flex: 1;
+    padding: 20px 50px;
+    height: inherit
+}
+
+.page__heading{
+    color: gray;
+}
+
+.content__wrapper{
+    background-color: white;
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px 20px 20px;
+}

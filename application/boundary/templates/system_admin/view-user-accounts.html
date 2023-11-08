@@ -1,0 +1,115 @@
+{% extends "./system_admin/base.html" %}
+
+{% block styles %}
+    <style>
+        table{
+            width: 100%;
+            text-align: left;
+        }
+
+        td, th{
+            margin: 0;
+            padding: 5px;
+            border: none;
+        }
+
+        tr:nth-child(even){
+            background-color: #e8e8e8;
+        }
+
+        .options-col{
+            text-align: center;
+        }
+
+        .search-field{
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        .search-field input[type=submit]{
+            padding: 7px;
+
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid black;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .search-field input[type=email]{
+            padding: 7px;
+            width: 300px;
+            border-radius: 7px;
+            outline: none;
+            border: 1px solid lightgrey;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="search-field">
+        <form>
+            <input type="email" name="q" placeholder="Search Email" required>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <div>
+        <table cellspacing="0">
+            <thead>
+                <th>
+                   #
+                </th>
+                <th>
+                    Email Address
+                </th>
+                <th>
+                    Password
+                </th>
+                <th>
+                    Access Level
+                </th>
+                <th class="options-col" colspan="3">
+                    Options
+                </th>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            {{ loop.index }}
+                        </td>
+                        <td>
+                            {{ user.email }}
+                        </td>
+                        <td>
+                            {{ user.password }}
+                        </td>
+                        <td>
+                            {{ user.user_type }}
+                        </td>
+                        {% if user.account_status == "SUSPENDED" %}
+                            <td class="options-col">
+                                <a href="{{ url_for("boundary.admin.unsuspend_user_account", account_id=user.id) }}">Unsuspend</a>
+                            </td>
+                        {% else %}
+                            <td class="options-col">
+                                <a href="{{ url_for("boundary.admin.suspend_user_account", account_id=user.id) }}">Suspend</a>
+                            </td>
+                        {% endif %}
+                        <td class="options-col">
+                            {% if session['user_id'] != user.id %}
+                                <a href="{{ url_for("boundary.admin.delete_user_account", account_id=user.id) }}">Delete</a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('boundary.admin.update_user_account', account_id=user.id)}}">Update</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

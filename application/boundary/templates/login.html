@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('boundary.static', filename="login.css") }}">
+</head>
+<body>
+    <section class="container">
+        <div class="container__content flex-column">
+            <div class="container__heading">
+                <h2>Login</h2>
+                <span>Cafe Management System</span>
+            </div>
+            <div class="container__message">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <span>{{ message }}</span>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <form class="flex-column" method="post" action="{{ url_for("boundary.auth.login") }}">
+                <div class="form__input flex-column">
+                    <label>Email Address</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form__input flex-column">
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+                </div>
+
+                <div class="form__submit">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

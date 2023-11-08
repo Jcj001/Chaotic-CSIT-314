@@ -1,0 +1,110 @@
+{% extends "./cafe_owner/base.html" %}
+
+{% block styles %}
+    <style>
+
+        .dates{
+            width: 600px;
+        }
+
+        .input_wrapper{
+            display: flex;
+            gap: 10px;
+        }
+
+        .date_inputs, .shifts_input{
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .work_slot_date label{
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+            width: 120px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 5px;
+        }
+
+        .work_slot_shift label{
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+            width: 150px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 5px;
+        }
+
+        input[type=radio]{
+            display: none;
+        }
+
+        input[type=radio]:checked + label{
+            background-color: #e8e8e8;
+        }
+
+        input[type=submit]{
+            display: block;
+            padding: 10px 50px;
+
+            margin-top: 20px;
+
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid black;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div>
+        {% set url = url_for("boundary.owner.update_work_slot", slot_id=slot.id) if slot else url_for("boundary.owner.create_work_slot") %}
+        <form class="flex-column" method="post" action="{{ url }}">
+            <div class="input_wrapper">
+                <div class="dates">
+                    <h3>Week Dates</h3>
+                    <div class="date_inputs">
+                        {% for date in work_slots_dates %}
+                            <div class="work_slot_date">
+                                <input type="radio" {{ "checked" if slot and date == slot.date else "" }} value="{{ date.strftime("%d/%b/%y") }}" id="date-{{ date.strftime("%d") }}" name="date" required>
+                                <label for="date-{{ date.strftime("%d") }}">
+                                    <span>{{ date.strftime("%d %b") }}</span>
+                                    <b>{{ date.strftime("%A") }}</b>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="shifts">
+                    <h3>Shifts</h3>
+                    <div class="shifts_input">
+                        {% for shift in shifts %}
+                            <div class="work_slot_shift">
+                                <input {{ "checked" if slot and slot.shift_time == shift['shift'] else "" }} type="radio" value="{{ shift['shift'] }}" id="{{ shift['shift'] }}" name="shift" required>
+                                <label for="{{ shift['shift'] }}">
+                                    <span>{{ shift['shift'] }}</span>
+                                    <b>{{ shift['time-start'].strftime("%I %p") }} - {{ shift['time-end'].strftime("%I %p") }}</b>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input type="submit" value="{{ "Create" if not slot else "Update" }} Work Slot">
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "./system_admin/base.html" %}
+
+{% set title = "View User Profiles" %}
+
+{% block styles %}
+    <style>
+        table{
+            width: 100%;
+            text-align: left;
+        }
+
+        td, th{
+            margin: 0;
+            padding: 5px;
+            border: none;
+        }
+
+        tr:nth-child(even){
+            background-color: #e8e8e8;
+        }
+
+        .options-col{
+            text-align: center;
+        }
+
+        .search-field{
+            float: right;
+            margin-bottom: 20px;
+        }
+
+        .search-field input[type=submit]{
+            padding: 7px;
+
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid black;
+            background-color: black;
+            color: white;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .search-field input[type=text]{
+            padding: 7px;
+            width: 300px;
+            border-radius: 7px;
+            outline: none;
+            border: 1px solid lightgrey;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="search-field">
+        <form>
+            <input type="text" name="q" placeholder="Search Name" required>
+            <input type="submit" value="Search">
+        </form>
+    </div>
+    <div>
+        <table cellspacing="0">
+            <thead>
+                <th>
+                   #
+                </th>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Designation
+                </th>
+                <th>
+                    Salary
+                </th>
+                <th>
+                    Access Level
+                </th>
+                <th></th>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            {{ loop.index }}
+                        </td>
+                        <td>
+                            {{ user.first_name }}
+                        </td>
+                        <td>
+                            {{ user.last_name }}
+                        </td>
+                        <td>
+                            {{ user.phone_number }}
+                        </td>
+                        <td>
+                            {{ user.designation }}
+                        </td>
+                        <td>
+                            {{ user.salary }}
+                        </td>
+                        <td>
+                            {{ user.user_type }}
+                        </td>
+                        <td>
+                            <a href="{{ url_for("boundary.admin.update_user_profile", account_id=user.id) }}">Update</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'system_admin/base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for("boundary.static", filename='admin/create_user_account.css') }}">
+{% endblock styles %}
+
+{% block content %}
+
+    {% set url = url_for('boundary.admin.create_user_account') if not user else url_for('boundary.admin.update_user_account', account_id=user.id) %}
+
+    <form class="flex-column" method="POST" action="{{ url }}">
+        <h3 class="section__heading">Account Credentials</h3>
+        <div class="form__name">
+            <div class="form__input flex-column">
+                <label class="required">Email Address</label>
+                <input type="email" name="email" required value="{{ user.email if user else "" }}">
+            </div>
+            <div class="form__input flex-column">
+                <label class="required">Password</label>
+                <input type="text" name="password" required value="{{ user.password if user else "" }}">
+            </div>
+            <div class="form__input form_block flex-column">
+                <label class="required">Access Level</label>
+                <select required name="access_level">
+                    <option value="">- Choose Account -</option>
+                    {% for level in ACCESS_LEVELS %}
+                        <option {{ "selected" if user and user.user_type == level else "" }} value="{{ level }}">{{ level.replace("_", " ").capitalize() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="form__name">
+            <div class="form__submit">
+                <input type="submit" value="{{ "Update Account" if user else "Add Account" }}">
+            </div>
+        </div>
+    </form>
+{% endblock content %}

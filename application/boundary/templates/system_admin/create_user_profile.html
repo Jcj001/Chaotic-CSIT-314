@@ -1,0 +1,60 @@
+{% extends 'system_admin/base.html' %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for("boundary.static", filename='admin/create_user_account.css') }}">
+{% endblock styles %}
+
+{% block content %}
+
+        {% set url = url_for('boundary.admin.create_user_profile') if not user else url_for('boundary.admin.update_user_profile', account_id=user.id) %}
+
+
+    <form class="flex-column" method="POST" action="{{ url }}">
+        {% if not user %}
+            <h3 class="section__heading">Choose Account</h3>
+            <div>
+                <div class="form__input form_block">
+                    <label class="required">Account</label>
+                    <select required name="account">
+                        <option value="">- Choose Account -</option>
+                        {% for account in all_accounts %}
+                            <option value="{{ account.id }}">{{ account.email }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+        </div>
+        {% endif %}
+        <h3 class="section__heading">Personal Information</h3>
+        <div class="form__name">
+            <div class="form__input flex-column">
+                <label class="required">First Name</label>
+                <input type="text" name="first_name" value="{{ user.first_name if user else "" }}" required>
+            </div>
+            <div class="form__input flex-column">
+                <label class="required">Last Name</label>
+                <input type="text" name="last_name" value="{{ user.last_name if user else "" }}"  required>
+            </div>
+            <div class="form__input flex-column">
+                <label class="required">Phone Number</label>
+                <input type="number" name="phone_number" value="{{ user.phone_number if user else "" }}"  required>
+            </div>
+        </div>
+        <br />
+        <h3 class="section__heading">Position Details</h3>
+        <div class="form__name">
+            <div class="form__input flex-column">
+                <label class="required">Designation</label>
+                <input type="text" name="designation" value="{{ user.designation if user else "" }}"  required>
+            </div>
+            <div class="form__input flex-column">
+                <label class="required">Salary</label>
+                <input type="number" name="salary" value="{{ user.salary if user else "" }}"  required>
+            </div>
+        </div>
+        <div class="form__name">
+            <div class="form__submit">
+                <input type="submit" value="{{ "Update Profile" if user else "Add Profile" }}" >
+            </div>
+        </div>
+    </form>
+{% endblock content %}

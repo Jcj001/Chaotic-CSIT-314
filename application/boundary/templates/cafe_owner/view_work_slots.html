@@ -1,0 +1,57 @@
+{% extends "./cafe_owner/base.html" %}
+
+{% block styles %}
+    <style>
+        table{
+            width: 100%;
+            text-align: left;
+        }
+
+        td, th{
+            margin: 0;
+            padding: 5px;
+            border: none;
+        }
+
+        tr:nth-child(even){
+            background-color: #e8e8e8;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <table cellspacing="0">
+        <thead>
+            <th>#</th>
+            <th>Date</th>
+            <th>Shift</th>
+            <th>Assigned To</th>
+            <th>Designation</th>
+            <th>Assigned By</th>
+            {% if page_for == "Upcoming" %}
+                <th></th>
+                <th></th>
+            {% endif %}
+        </thead>
+        <tbody>
+            {% for slot in slots %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ slot.date.strftime("%d %b %Y") }}</td>
+                    <td>{{ slot.shift_time }}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    {% if page_for == "Upcoming" %}
+                        <td>
+                            <a href="{{ url_for("boundary.owner.update_work_slot", slot_id=slot.id) }}">Update</a>
+                        </td>
+                        <td>
+                            <a href="{{ url_for("boundary.owner.delete_work_slot", work_slot_id=slot.id) }}">Delete</a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

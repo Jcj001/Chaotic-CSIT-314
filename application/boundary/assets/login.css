@@ -1,0 +1,57 @@
+@import "base.css";
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container__content{
+    width: 400px;
+}
+.container__heading{
+    margin-bottom: 10px;
+}
+.container__heading h2{
+    margin-bottom: 2px;
+}
+.container__heading span{
+    color: grey;
+}
+.container form{
+    gap: 10px;
+}
+
+.container .form__input label{
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+.container .form__input input{
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid lightgrey;
+}
+
+.container .form__submit input{
+    display: block;
+    padding: 10px;
+    width: 100px;
+    margin-left: auto;
+
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.container__message span{
+    margin-bottom: 5px;
+    color: red;
+    text-align: center;
+    display: block;
+}

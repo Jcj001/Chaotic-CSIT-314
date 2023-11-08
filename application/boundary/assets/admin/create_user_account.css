@@ -1,0 +1,47 @@
+.form__name{
+    display: flex;
+    gap: 10px;
+}
+
+.form__name .form__input{
+    flex: 1;
+}
+
+.form_block *{
+    display: block;
+}
+.form_block select{
+    width: 300px;
+}
+
+.section__heading{
+    color: lightgrey;
+}
+
+.form__input label{
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.form__input input, .form_block select{
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid lightgrey;
+}
+.form__submit input{
+    display: block;
+    padding: 10px 50px;
+
+    margin-top: 20px;
+
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+
+    cursor: pointer;
+}
